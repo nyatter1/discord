@@ -7,76 +7,74 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#000000',
+                        glass: 'rgba(255, 255, 255, 0.08)',
+                        glassBorder: 'rgba(255, 255, 255, 0.12)',
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --primary: #3b82f6;
-            --bg: #000000;
-            --glass: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --glass-highlight: rgba(255, 255, 255, 0.1);
-        }
-
         body {
-            font-family: 'Outfit', sans-serif;
-            background-color: var(--bg);
-            color: #ffffff;
-            overflow-x: hidden;
+            background-color: #000;
+            color: #fff;
             background-image: 
-                radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.08), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(236, 72, 153, 0.08), transparent 25%);
+                radial-gradient(circle at 10% 20%, rgba(29, 78, 216, 0.15), transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.15), transparent 20%);
             background-attachment: fixed;
+            overflow-x: hidden;
         }
 
-        /* Modern Scrollbar */
+        /* Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #555; }
 
-        /* Glassmorphism Utilities */
-        .glass {
-            background: var(--glass);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-        }
-        
+        /* Effects */
         .glass-panel {
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(20px);
-            border-right: 1px solid var(--glass-border);
-            border-left: 1px solid var(--glass-border);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glassBorder);
         }
 
-        .hover-glow:hover {
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-        }
-
-        /* Animations */
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        
-        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-5px); } 100% { transform: translateY(0px); } }
-        .animate-float { animation: float 6s ease-in-out infinite; }
-
-        /* Text Effects */
         .effect-rainbow {
-            background: linear-gradient(to right, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
-            -webkit-background-clip: text; color: transparent; background-size: 200% auto; animation: rainbow 5s linear infinite;
+            background: linear-gradient(to right, #ef4444, #eab308, #22c55e, #3b82f6, #a855f7);
+            -webkit-background-clip: text; color: transparent; background-size: 200% auto; animation: rainbow 3s linear infinite;
         }
         @keyframes rainbow { to { background-position: 200% center; } }
 
-        .effect-glow { text-shadow: 0 0 10px currentColor; }
-        .effect-fire { background: linear-gradient(0deg, #f00, #ff0); -webkit-background-clip: text; color: transparent; text-shadow: 0 -2px 10px #f00; }
-        .effect-glitch { position: relative; display: inline-block; }
-        .effect-glitch::before, .effect-glitch::after { content: attr(data-text); position: absolute; top: 0; left: 0; opacity: 0.8; }
-        .effect-glitch::before { color: #0ff; z-index: -1; animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite; }
-        .effect-glitch::after { color: #f0f; z-index: -2; animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite; }
-        @keyframes glitch { 0% { transform: translate(0); } 20% { transform: translate(-2px, 2px); } 40% { transform: translate(-2px, -2px); } 60% { transform: translate(2px, 2px); } 80% { transform: translate(2px, -2px); } 100% { transform: translate(0); } }
+        .effect-glow { text-shadow: 0 0 12px currentColor; }
+        .effect-fire { 
+            background: linear-gradient(0deg, #ff0000 0%, #ffff00 100%); 
+            -webkit-background-clip: text; color: transparent; 
+            text-shadow: 0 -2px 10px rgba(255, 0, 0, 0.5); 
+        }
+        .effect-glitch { position: relative; }
+        .effect-glitch::before, .effect-glitch::after {
+            content: attr(data-text); position: absolute; top: 0; left: 0; opacity: 0.8;
+        }
+        .effect-glitch::before { color: #0ff; z-index: -1; animation: glitch 0.3s infinite; clip-path: inset(0 0 60% 0); transform: translate(-2px, 0); }
+        .effect-glitch::after { color: #f0f; z-index: -2; animation: glitch 0.3s infinite reverse; clip-path: inset(40% 0 0 0); transform: translate(2px, 0); }
+        @keyframes glitch { 0% { transform: translate(0); } 20% { transform: translate(-2px, 2px); } 40% { transform: translate(-2px, -2px); } 60% { transform: translate(2px, 2px); } 100% { transform: translate(0); } }
 
-        /* Loader */
-        .loader { width: 48px; height: 48px; border: 5px solid #FFF; border-bottom-color: transparent; border-radius: 50%; display: inline-block; box-sizing: border-box; animation: rotation 1s linear infinite; }
+        .loader {
+            width: 24px; height: 24px; border: 3px solid #FFF; border-bottom-color: transparent; border-radius: 50%;
+            display: inline-block; animation: rotation 1s linear infinite;
+        }
         @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* File Upload Hidden */
+        input[type="file"] { display: none; }
     </style>
 <script type="importmap">
 {
@@ -89,14 +87,13 @@
 }
 </script>
 </head>
-<body class="antialiased selection:bg-blue-500 selection:text-white">
+<body class="antialiased text-slate-200">
 
-    <div id="app" class="min-h-screen flex justify-center"></div>
+    <div id="app" class="flex justify-center min-h-screen"></div>
 
-    <!-- Firebase & App Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, setDoc, getDoc, updateDoc, arrayUnion, arrayRemove, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, setDoc, getDoc, updateDoc, arrayUnion, arrayRemove, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDYI4Avd42wjJa3YOSKuGHhSCGgLFLZvik",
@@ -111,65 +108,66 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- Constants ---
-        const COLORS = [
-            "#3b82f6", "#ef4444", "#10b981", "#f59e0b", "#8b5cf6", "#ec4899", "#06b6d4", "#f97316",
-            "#ffffff", "#000000", "#a855f7", "#6366f1", "#14b8a6", "#84cc16", "#eab308"
-        ];
+        // --- Config ---
+        const COLORS = ["#3b82f6", "#ef4444", "#10b981", "#f59e0b", "#8b5cf6", "#ec4899", "#06b6d4", "#ffffff", "#a855f7", "#eab308"];
         const EFFECTS = [
             { id: 'none', label: 'None' },
             { id: 'rainbow', label: 'Prismatic' },
-            { id: 'glow', label: 'Ethereal' },
+            { id: 'glow', label: 'Neon Glow' },
             { id: 'glitch', label: 'Cyberpunk' },
             { id: 'fire', label: 'Inferno' }
         ];
         const GRADIENTS = [
-            { id: 'none', label: 'Flat', class: '' },
-            { id: 'sunset', label: 'Sunset', class: 'bg-gradient-to-r from-orange-500 to-pink-500' },
-            { id: 'ocean', label: 'Ocean', class: 'bg-gradient-to-r from-cyan-500 to-blue-500' },
-            { id: 'royal', label: 'Royal', class: 'bg-gradient-to-r from-purple-600 to-indigo-600' },
-            { id: 'toxic', label: 'Toxic', class: 'bg-gradient-to-r from-yellow-400 to-green-500' },
-            { id: 'candy', label: 'Candy', class: 'bg-gradient-to-r from-pink-400 to-purple-400' }
+            { id: 'none', label: 'Solid', class: '' },
+            { id: 'sunset', label: 'Sunset', class: 'bg-gradient-to-r from-orange-500 to-pink-600' },
+            { id: 'ocean', label: 'Ocean', class: 'bg-gradient-to-r from-cyan-400 to-blue-600' },
+            { id: 'royal', label: 'Royal', class: 'bg-gradient-to-r from-purple-500 to-indigo-600' },
+            { id: 'emerald', label: 'Emerald', class: 'bg-gradient-to-r from-emerald-400 to-green-600' },
+            { id: 'gold', label: 'Gold', class: 'bg-gradient-to-r from-yellow-300 to-amber-600' }
         ];
 
-        // --- State ---
+        // --- Global State ---
         let currentUser = JSON.parse(localStorage.getItem('user_session')) || null;
         let tweets = [];
         let usersCache = {};
         let currentRoute = 'feed';
         let profileTarget = null;
-        let listeners = [];
+        let unsubTweets = null;
+        let unsubUser = null;
 
-        // --- Core Functions ---
+        // --- Helpers ---
+        const fileToBase64 = (file) => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+
+        // --- Core Logic ---
 
         async function login(username, password) {
             try {
-                const docRef = doc(db, "users", username);
-                const docSnap = await getDoc(docRef);
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    if (data.password === password) {
-                        currentUser = data;
-                        localStorage.setItem('user_session', JSON.stringify(currentUser));
-                        initApp();
-                        return { success: true };
-                    }
+                const docSnap = await getDoc(doc(db, "users", username));
+                if (docSnap.exists() && docSnap.data().password === password) {
+                    currentUser = docSnap.data();
+                    localStorage.setItem('user_session', JSON.stringify(currentUser));
+                    initApp();
+                    return { success: true };
                 }
                 return { error: "Invalid credentials" };
-            } catch (e) { console.error(e); return { error: "Login failed: " + e.message }; }
+            } catch (e) { return { error: e.message }; }
         }
 
         async function signup(username, password, name) {
             try {
                 const docRef = doc(db, "users", username);
-                const docSnap = await getDoc(docRef);
-                if (docSnap.exists()) return { error: "Username taken" };
+                if ((await getDoc(docRef)).exists()) return { error: "Username taken" };
                 
                 const newUser = {
                     username, password, name,
-                    bio: "Ready to rock the X-Clone Ultra world.",
+                    bio: "New to the Ultraverse.",
                     pfp: `https://api.dicebear.com/7.x/avataaars/svg?seed=${username}`,
-                    banner: `https://picsum.photos/seed/${username}/1200/400`,
+                    banner: `https://picsum.photos/seed/${username}/800/300`,
                     color: '#3b82f6', effect: 'none', gradient: 'none',
                     following: [], followers: [], joined: new Date().toISOString()
                 };
@@ -179,13 +177,14 @@
                 localStorage.setItem('user_session', JSON.stringify(currentUser));
                 initApp();
                 return { success: true };
-            } catch (e) { console.error(e); return { error: "Signup failed" }; }
+            } catch (e) { return { error: "Signup failed" }; }
         }
 
         function logout() {
             currentUser = null;
             localStorage.removeItem('user_session');
-            listeners.forEach(unsub => unsub());
+            if (unsubTweets) unsubTweets();
+            if (unsubUser) unsubUser();
             renderAuth();
         }
 
@@ -199,85 +198,69 @@
             });
         }
 
-        async function toggleLike(tweetId, currentLikes) {
-            const tweetRef = doc(db, "tweets", tweetId);
-            if (currentLikes.includes(currentUser.username)) {
-                await updateDoc(tweetRef, { likes: arrayRemove(currentUser.username) });
-            } else {
-                await updateDoc(tweetRef, { likes: arrayUnion(currentUser.username) });
-            }
-        }
+        async function toggleFollow(targetUsername) {
+            if (targetUsername === currentUser.username) return;
 
-        async function toggleFollow(targetUser) {
-            if(targetUser === currentUser.username) return;
-            
-            const meRef = doc(db, "users", currentUser.username);
-            const themRef = doc(db, "users", targetUser);
-            
-            // Optimistic update for UI speed
-            const isFollowing = currentUser.following.includes(targetUser);
-            
-            if (isFollowing) {
-                await updateDoc(meRef, { following: arrayRemove(targetUser) });
-                await updateDoc(themRef, { followers: arrayRemove(currentUser.username) });
-                currentUser.following = currentUser.following.filter(u => u !== targetUser);
-            } else {
-                await updateDoc(meRef, { following: arrayUnion(targetUser) });
-                await updateDoc(themRef, { followers: arrayUnion(currentUser.username) });
-                currentUser.following.push(targetUser);
-            }
-            // Update local cache for immediate UI reflection
-            localStorage.setItem('user_session', JSON.stringify(currentUser));
-            render();
-        }
+            const myRef = doc(db, "users", currentUser.username);
+            const targetRef = doc(db, "users", targetUsername);
+            const isFollowing = currentUser.following.includes(targetUsername);
 
-        async function addComment(tweetId, text) {
-            if(!text.trim()) return;
-            const tweetRef = doc(db, "tweets", tweetId);
-            const comment = {
-                id: Date.now().toString(),
-                author: currentUser.username,
-                content: text,
-                timestamp: new Date().toISOString()
-            };
-            // Note: In a production app, comments should be a subcollection. 
-            // For this clone scope, array is simpler but limited.
-            // Let's use array for simplicity to match previous schema requests, 
-            // but subcollection is better for scaling. Sticking to array for easy single-doc reads.
-            await updateDoc(tweetRef, { comments: arrayUnion(comment) });
+            try {
+                // Optimistic UI update
+                if (isFollowing) {
+                    currentUser.following = currentUser.following.filter(u => u !== targetUsername);
+                } else {
+                    currentUser.following.push(targetUsername);
+                }
+                // Save optimism
+                localStorage.setItem('user_session', JSON.stringify(currentUser));
+                render(); // Re-render immediately
+
+                // DB Update
+                if (isFollowing) {
+                    await updateDoc(myRef, { following: arrayRemove(targetUsername) });
+                    await updateDoc(targetRef, { followers: arrayRemove(currentUser.username) });
+                } else {
+                    await updateDoc(myRef, { following: arrayUnion(targetUsername) });
+                    await updateDoc(targetRef, { followers: arrayUnion(currentUser.username) });
+                }
+            } catch (e) {
+                console.error("Follow failed", e);
+                // Revert on fail (simplified)
+                initApp(); 
+            }
         }
 
         async function updateProfile(data) {
-            const ref = doc(db, "users", currentUser.username);
-            await updateDoc(ref, data);
+            await updateDoc(doc(db, "users", currentUser.username), data);
+            // Wait for listener to update state or force local update
             currentUser = { ...currentUser, ...data };
             localStorage.setItem('user_session', JSON.stringify(currentUser));
             currentRoute = 'profile';
             render();
         }
 
-        // --- Data Listeners ---
+        // --- Initialization ---
 
         function initApp() {
-            // Tweets Listener
+            if (unsubTweets) unsubTweets();
             const q = query(collection(db, "tweets"), orderBy("timestamp", "desc"));
-            const unsubTweets = onSnapshot(q, (snapshot) => {
+            unsubTweets = onSnapshot(q, async (snapshot) => {
                 tweets = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-                // Fetch authors we don't know
+                // Cache authors
                 const authors = [...new Set(tweets.map(t => t.author))];
-                fetchUsers(authors).then(render);
+                await fetchUsers(authors);
+                render();
             });
-            listeners.push(unsubTweets);
 
-            // User Self Listener
-            const unsubUser = onSnapshot(doc(db, "users", currentUser.username), (doc) => {
+            if (unsubUser) unsubUser();
+            unsubUser = onSnapshot(doc(db, "users", currentUser.username), (doc) => {
                 if (doc.exists()) {
                     currentUser = doc.data();
                     localStorage.setItem('user_session', JSON.stringify(currentUser));
                     render();
                 }
             });
-            listeners.push(unsubUser);
 
             render();
         }
@@ -285,149 +268,76 @@
         async function fetchUsers(usernames) {
             const missing = usernames.filter(u => !usersCache[u]);
             if (missing.length === 0) return;
-            
-            // Firestore 'in' query supports up to 10
-            // We'll just fetch individual docs for simplicity in this demo environment
-            // Or use a loop.
-            const promises = missing.map(u => getDoc(doc(db, "users", u)));
-            const docs = await Promise.all(promises);
-            docs.forEach(d => {
-                if (d.exists()) usersCache[d.id] = d.data();
-            });
+            // Batch fetch simplified for demo (one by one)
+            await Promise.all(missing.map(async u => {
+                const d = await getDoc(doc(db, "users", u));
+                if (d.exists()) usersCache[u] = d.data();
+            }));
         }
 
-        // --- UI Rendering ---
+        // --- Rendering ---
 
         const root = document.getElementById('app');
 
         function render() {
-            if (!currentUser) {
-                renderAuth();
-                return;
-            }
+            if (!currentUser) { renderAuth(); return; }
 
-            root.className = "w-full max-w-[1400px] mx-auto flex h-screen overflow-hidden";
+            root.className = "w-full max-w-[1300px] mx-auto flex h-screen overflow-hidden bg-black text-slate-200";
             root.innerHTML = '';
 
-            const sidebar = createSidebar();
-            const main = createMain();
-            const widgets = createWidgets();
-
-            root.append(sidebar, main, widgets);
-        }
-
-        // --- Components ---
-
-        function renderAuth() {
-            root.className = "min-h-screen w-full flex items-center justify-center p-4";
-            root.innerHTML = `
-                <div class="glass p-8 md:p-12 rounded-3xl w-full max-w-md relative overflow-hidden animate-fade-in border border-white/10 shadow-2xl">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
-                    <div class="text-center mb-8">
-                        <i class="fa-brands fa-x-twitter text-6xl text-white mb-6 animate-float"></i>
-                        <h1 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 mb-2">Welcome Back</h1>
-                        <p class="text-gray-400">Enter the ultraverse of connection.</p>
-                    </div>
-
-                    <form id="authForm" class="space-y-5">
-                        <div id="signupFields" class="hidden space-y-5">
-                            <input type="text" name="name" placeholder="Display Name" class="w-full bg-black/50 border border-gray-700 rounded-xl p-4 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition duration-300">
-                        </div>
-                        <input type="text" name="username" placeholder="Username" class="w-full bg-black/50 border border-gray-700 rounded-xl p-4 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition duration-300" required>
-                        <input type="password" name="password" placeholder="Password" class="w-full bg-black/50 border border-gray-700 rounded-xl p-4 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition duration-300" required>
-                        
-                        <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-400 text-white font-bold rounded-xl py-4 hover:shadow-lg hover:shadow-blue-500/20 transition transform hover:scale-[1.02]">
-                            <span id="btnText">Sign In</span>
-                        </button>
-                    </form>
-
-                    <div class="mt-8 text-center text-gray-500">
-                        <span id="switchText">Don't have an account?</span>
-                        <button id="switchBtn" class="text-blue-400 hover:text-blue-300 font-bold ml-1 transition">Create one</button>
-                    </div>
-                </div>
-            `;
-
-            let isSignup = false;
-            const form = document.getElementById('authForm');
-            const switchBtn = document.getElementById('switchBtn');
-            const signupFields = document.getElementById('signupFields');
-            const btnText = document.getElementById('btnText');
-            const switchText = document.getElementById('switchText');
-
-            switchBtn.onclick = () => {
-                isSignup = !isSignup;
-                signupFields.classList.toggle('hidden', !isSignup);
-                btnText.textContent = isSignup ? 'Create Account' : 'Sign In';
-                switchText.textContent = isSignup ? 'Already have an account?' : "Don't have an account?";
-                switchBtn.textContent = isSignup ? 'Sign In' : 'Create one';
-            };
-
-            form.onsubmit = async (e) => {
-                e.preventDefault();
-                btnText.innerHTML = '<span class="loader w-6 h-6 border-2"></span>';
-                const data = Object.fromEntries(new FormData(form));
-                
-                const res = isSignup 
-                    ? await signup(data.username, data.password, data.name)
-                    : await login(data.username, data.password);
-                
-                if (res.error) {
-                    btnText.textContent = 'Try Again';
-                    alert(res.error);
-                }
-            };
+            root.appendChild(createSidebar());
+            root.appendChild(createMain());
+            root.appendChild(createWidgets());
         }
 
         function createSidebar() {
             const nav = document.createElement('nav');
-            nav.className = "w-20 xl:w-[280px] h-full flex flex-col justify-between p-4 border-r border-white/5 bg-black/20 backdrop-blur-md hidden md:flex z-20";
+            nav.className = "w-[80px] xl:w-[260px] h-full flex flex-col justify-between py-6 px-2 xl:px-4 border-r border-white/10 hidden md:flex shrink-0";
             
-            const items = [
-                { icon: 'fa-house', label: 'Home', id: 'feed' },
-                { icon: 'fa-user', label: 'Profile', id: 'profile', action: () => { profileTarget = currentUser.username; } },
-                { icon: 'fa-wand-magic-sparkles', label: 'Design', id: 'settings' }
+            const links = [
+                { id: 'feed', icon: 'fa-house', label: 'Home', onclick: () => { currentRoute='feed'; render(); } },
+                { id: 'profile', icon: 'fa-user', label: 'Profile', onclick: () => { profileTarget=currentUser.username; currentRoute='profile'; render(); } },
+                { id: 'settings', icon: 'fa-paintbrush', label: 'Design', onclick: () => { currentRoute='settings'; render(); } },
             ];
 
             nav.innerHTML = `
-                <div class="space-y-6">
-                    <div class="p-3 w-fit rounded-full hover:bg-white/10 transition cursor-pointer">
-                        <i class="fa-brands fa-x-twitter text-4xl text-white"></i>
+                <div class="space-y-2 flex flex-col items-center xl:items-start">
+                    <div class="p-3 mb-2 rounded-full hover:bg-white/10 transition cursor-pointer">
+                        <i class="fa-brands fa-x-twitter text-3xl text-white"></i>
                     </div>
-                    <div class="space-y-2">
-                        ${items.map(i => `
-                            <button id="nav-${i.id}" class="w-full flex items-center gap-5 p-4 rounded-full transition-all duration-300 group ${currentRoute === i.id ? 'font-bold bg-white/10' : 'hover:bg-white/5'}">
-                                <i class="fa-solid ${i.icon} text-2xl group-hover:scale-110 transition"></i>
-                                <span class="hidden xl:block text-xl">${i.label}</span>
-                            </button>
-                        `).join('')}
-                    </div>
-                    <button id="postBtn" class="w-full mt-8 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold py-4 rounded-full shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 transition transform hover:scale-105">
-                        <span class="hidden xl:block text-lg">Post</span>
+                    ${links.map(l => `
+                        <button onclick="window.navTo('${l.id}')" class="group flex items-center gap-4 p-3 xl:pr-6 rounded-full transition hover:bg-white/10 ${currentRoute === l.id ? 'font-bold' : ''}">
+                            <i class="fa-solid ${l.icon} text-2xl relative">
+                                ${currentRoute === l.id ? '<div class="absolute -inset-2 bg-blue-500/20 blur-md rounded-full"></div>' : ''}
+                            </i>
+                            <span class="hidden xl:block text-xl">${l.label}</span>
+                        </button>
+                    `).join('')}
+                    
+                    <button id="postBtn" class="mt-8 bg-blue-500 hover:bg-blue-600 text-white rounded-full p-4 xl:py-3 xl:px-8 shadow-lg shadow-blue-500/30 transition transform hover:scale-105">
                         <i class="fa-solid fa-feather xl:hidden text-xl"></i>
+                        <span class="hidden xl:block font-bold text-lg">Post</span>
                     </button>
                 </div>
-                
-                <div class="flex items-center gap-3 p-3 rounded-full hover:bg-white/10 cursor-pointer transition relative group" onclick="logout()">
-                    <img src="${currentUser.pfp}" class="w-12 h-12 rounded-full object-cover border-2 border-transparent group-hover:border-blue-500 transition">
+
+                <div class="flex items-center gap-3 p-3 rounded-full hover:bg-white/10 cursor-pointer transition" onclick="logout()">
+                    <img src="${currentUser.pfp}" class="w-10 h-10 rounded-full object-cover border border-white/20">
                     <div class="hidden xl:block overflow-hidden text-left">
-                        <p class="font-bold truncate text-white">${currentUser.name}</p>
-                        <p class="text-gray-500 truncate text-sm">@${currentUser.username}</p>
+                        <p class="font-bold text-sm truncate text-white">${currentUser.name}</p>
+                        <p class="text-gray-500 text-xs truncate">@${currentUser.username}</p>
                     </div>
-                    <i class="fa-solid fa-right-from-bracket ml-auto hidden xl:block text-gray-500 group-hover:text-red-500 transition"></i>
                 </div>
             `;
 
-            items.forEach(i => {
-                nav.querySelector(`#nav-${i.id}`).onclick = () => {
-                    if (i.action) i.action();
-                    currentRoute = i.id;
-                    render();
-                };
-            });
-
+            // Bind actions
+            window.navTo = (id) => {
+                const link = links.find(l => l.id === id);
+                if (link) link.onclick();
+            };
+            
             nav.querySelector('#postBtn').onclick = () => {
-                if (currentRoute !== 'feed') { currentRoute = 'feed'; render(); }
+                currentRoute = 'feed';
+                render();
                 setTimeout(() => document.getElementById('tweetInput')?.focus(), 100);
             };
 
@@ -436,17 +346,8 @@
 
         function createMain() {
             const main = document.createElement('main');
-            main.className = "flex-1 overflow-y-auto relative scroll-smooth";
+            main.className = "flex-1 border-r border-white/10 overflow-y-auto scroll-smooth relative";
             
-            // Header
-            const header = document.createElement('div');
-            header.className = "sticky top-0 z-30 glass border-b border-white/5 p-4 flex justify-between items-center";
-            header.innerHTML = `
-                <h2 class="text-xl font-bold backdrop-blur-md">${currentRoute === 'feed' ? 'Home' : currentRoute === 'settings' ? 'Customize' : ''}</h2>
-                ${currentRoute === 'profile' ? `<div class="text-sm font-mono opacity-50">@${profileTarget}</div>` : ''}
-            `;
-            main.appendChild(header);
-
             // Router
             if (currentRoute === 'feed') main.appendChild(renderFeed());
             else if (currentRoute === 'profile') main.appendChild(renderProfile());
@@ -457,84 +358,87 @@
 
         function createWidgets() {
             const aside = document.createElement('aside');
-            aside.className = "w-[350px] hidden lg:block p-6 border-l border-white/5 relative z-10";
+            aside.className = "w-[350px] hidden lg:block p-6 space-y-6";
             
-            // Search
             aside.innerHTML = `
                 <div class="sticky top-4 space-y-6">
                     <div class="relative group">
-                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-gray-500 group-focus-within:text-blue-500 transition"></i>
-                        <input type="text" placeholder="Search X Ultra" class="w-full bg-gray-900 border border-transparent focus:border-blue-500 focus:bg-black rounded-full py-3 pl-12 pr-4 outline-none transition text-white placeholder-gray-500">
+                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-gray-500"></i>
+                        <input type="text" placeholder="Search" class="w-full bg-slate-900 border border-transparent focus:border-blue-500 focus:bg-black rounded-full py-3 pl-12 pr-4 outline-none text-white transition placeholder-slate-500">
                     </div>
 
-                    <div class="bg-gray-900/50 backdrop-blur-sm rounded-2xl border border-white/5 p-4">
+                    <div class="bg-slate-900/50 border border-white/5 rounded-2xl p-4">
                         <h3 class="font-bold text-xl mb-4 px-2">Who to follow</h3>
                         <div id="whoToFollow" class="space-y-4">
-                            <div class="text-center text-gray-500 py-4"><span class="loader w-4 h-4 border-2"></span></div>
+                             <div class="flex justify-center py-4"><span class="loader border-slate-500"></span></div>
                         </div>
                     </div>
                 </div>
             `;
-
-            // Load Who to Follow
-            // In a real app we'd query users not followed. Here we pick from cache or users list.
+            
+            // Load Suggestions
             setTimeout(async () => {
-                const q = query(collection(db, "users"), orderBy("joined", "desc")); // Simplified logic
-                const snap = await getDocs(q); // Just fetching some recent users
-                const suggestions = snap.docs.map(d => d.data())
+                const q = query(collection(db, "users"));
+                const snap = await getDocs(q); // Fetch all (simplified)
+                const list = aside.querySelector('#whoToFollow');
+                const others = snap.docs.map(d => d.data())
                     .filter(u => u.username !== currentUser.username && !currentUser.following.includes(u.username))
-                    .slice(0, 3);
-                
-                const container = aside.querySelector('#whoToFollow');
-                if (suggestions.length === 0) {
-                    container.innerHTML = `<p class="text-sm text-gray-500 px-2">No suggestions right now.</p>`;
-                } else {
-                    container.innerHTML = suggestions.map(u => `
-                        <div class="flex items-center justify-between p-2 hover:bg-white/5 rounded-xl transition cursor-pointer" onclick="viewUser('${u.username}')">
+                    .slice(0, 4);
+
+                if(others.length === 0) list.innerHTML = `<div class="px-2 text-slate-500">No suggestions.</div>`;
+                else {
+                    list.innerHTML = others.map(u => `
+                        <div class="flex items-center justify-between p-2 hover:bg-white/5 rounded-xl transition cursor-pointer" onclick="window.viewUser('${u.username}')">
                             <div class="flex items-center gap-3 overflow-hidden">
-                                <img src="${u.pfp}" class="w-10 h-10 rounded-full object-cover">
-                                <div class="truncate">
+                                <img src="${u.pfp}" class="w-10 h-10 rounded-full object-cover bg-slate-800">
+                                <div class="min-w-0">
                                     <p class="font-bold hover:underline truncate">${u.name}</p>
-                                    <p class="text-gray-500 text-sm truncate">@${u.username}</p>
+                                    <p class="text-slate-500 text-sm truncate">@${u.username}</p>
                                 </div>
                             </div>
-                            <button onclick="event.stopPropagation(); toggleFollow('${u.username}')" class="bg-white text-black text-sm font-bold px-4 py-1.5 rounded-full hover:opacity-90 transition">Follow</button>
+                            <button onclick="event.stopPropagation(); window.doFollow('${u.username}')" class="bg-white text-black text-sm font-bold px-4 py-1.5 rounded-full hover:bg-slate-200">Follow</button>
                         </div>
                     `).join('');
                 }
-            }, 1000);
+            }, 500);
 
             return aside;
         }
 
-        // --- View Components ---
+        // --- View Pages ---
 
         function renderFeed() {
             const div = document.createElement('div');
             
-            // Tweet Input
+            // Header
+            div.innerHTML = `
+                <div class="sticky top-0 z-30 bg-black/70 backdrop-blur-md border-b border-white/10 px-4 py-3 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <h2 class="text-lg font-bold">Home</h2>
+                </div>
+            `;
+
+            // Composer
             const composer = document.createElement('div');
-            composer.className = "p-4 border-b border-white/5 relative";
+            composer.className = "p-4 border-b border-white/10";
             composer.innerHTML = `
                 <div class="flex gap-4">
-                    <img src="${currentUser.pfp}" class="w-12 h-12 rounded-full object-cover shadow-lg">
+                    <img src="${currentUser.pfp}" class="w-10 h-10 rounded-full object-cover">
                     <div class="flex-1">
-                        <textarea id="tweetInput" placeholder="What is happening?!" class="w-full bg-transparent text-xl text-white placeholder-gray-500 outline-none resize-none h-24 p-2 font-medium"></textarea>
+                        <textarea id="tweetInput" placeholder="What is happening?!" class="w-full bg-transparent text-xl text-white placeholder-slate-500 outline-none resize-none h-20 py-2"></textarea>
                         
-                        <div id="imgPreview" class="hidden relative mb-4 rounded-2xl overflow-hidden border border-white/10">
-                            <img class="w-full max-h-[400px] object-cover">
-                            <button onclick="clearImage()" class="absolute top-2 right-2 bg-black/60 hover:bg-black/80 text-white rounded-full w-8 h-8 flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
+                        <div id="previewImg" class="hidden relative mb-3 rounded-xl overflow-hidden border border-white/10">
+                            <img class="w-full max-h-[300px] object-cover">
+                            <button onclick="clearComposerImg()" class="absolute top-2 right-2 bg-black/50 p-1 rounded-full text-white hover:bg-black/80"><i class="fa-solid fa-xmark w-6 h-6 flex items-center justify-center"></i></button>
                         </div>
 
-                        <div class="flex items-center justify-between border-t border-white/5 pt-3">
-                            <div class="flex gap-2 text-blue-400">
-                                <label class="p-2 hover:bg-blue-500/10 rounded-full cursor-pointer transition"><i class="fa-regular fa-image"></i>
-                                    <input type="file" hidden accept="image/*" onchange="handleImage(this)">
+                        <div class="flex justify-between items-center border-t border-white/10 pt-3">
+                            <div class="text-blue-400 flex gap-2">
+                                <label class="p-2 hover:bg-blue-500/10 rounded-full cursor-pointer transition">
+                                    <i class="fa-regular fa-image"></i>
+                                    <input type="file" accept="image/*" onchange="handleComposerImg(this)">
                                 </label>
-                                <button class="p-2 hover:bg-blue-500/10 rounded-full transition"><i class="fa-solid fa-gift"></i></button>
-                                <button class="p-2 hover:bg-blue-500/10 rounded-full transition"><i class="fa-regular fa-face-smile"></i></button>
                             </div>
-                            <button onclick="submitTweet()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-6 py-2 rounded-full transition shadow-lg shadow-blue-500/20 disabled:opacity-50 disabled:cursor-not-allowed">Post</button>
+                            <button onclick="submitPost()" class="bg-blue-500 text-white font-bold px-5 py-1.5 rounded-full hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed">Post</button>
                         </div>
                     </div>
                 </div>
@@ -542,411 +446,398 @@
             div.appendChild(composer);
 
             // Feed
-            const list = document.createElement('div');
+            const feedList = document.createElement('div');
             const relevant = tweets.filter(t => t.author === currentUser.username || currentUser.following.includes(t.author));
             
             if (relevant.length === 0) {
-                list.innerHTML = `
-                    <div class="p-12 text-center text-gray-500 animate-fade-in">
-                        <h3 class="text-2xl font-bold text-white mb-2">Welcome to the void</h3>
-                        <p>Follow people or post something to get started.</p>
+                feedList.innerHTML = `
+                    <div class="p-10 text-center">
+                        <h3 class="text-2xl font-bold mb-2">Welcome to Ultra</h3>
+                        <p class="text-slate-500">Find people to follow in the sidebar.</p>
                     </div>`;
             } else {
-                relevant.forEach(t => list.appendChild(createTweetCard(t)));
+                relevant.forEach(t => feedList.appendChild(createTweet(t)));
             }
-            div.appendChild(list);
+            div.appendChild(feedList);
 
             return div;
         }
 
-        function createTweetCard(tweet) {
-            const author = usersCache[tweet.author] || { name: tweet.author, username: tweet.author, pfp: '', color: '#fff', effect: 'none', gradient: 'none' };
-            const isLiked = tweet.likes.includes(currentUser.username);
+        function createTweet(t) {
+            const author = usersCache[t.author] || { name: t.author, username: t.author, pfp: '', color: '#fff' };
+            const el = document.createElement('div');
+            el.className = "p-4 border-b border-white/10 hover:bg-white/[0.02] transition cursor-pointer";
             
-            const card = document.createElement('div');
-            card.className = "border-b border-white/5 p-4 hover:bg-white/[0.02] transition cursor-pointer animate-fade-in";
-            
-            // Styling logic
-            let nameClass = "font-bold text-base mr-2";
+            // Styling
             let nameStyle = `color: ${author.color}`;
-            if (author.gradient !== 'none') {
+            let nameClasses = `font-bold hover:underline mr-1 ${author.effect !== 'none' ? 'effect-'+author.effect : ''}`;
+            if (author.gradient && author.gradient !== 'none') {
                 const g = GRADIENTS.find(x => x.id === author.gradient);
                 if (g) {
-                    nameClass += ` ${g.class} text-transparent bg-clip-text`;
-                    nameStyle = "";
+                    nameClasses += ` ${g.class} text-transparent bg-clip-text`;
+                    nameStyle = '';
                 }
             }
-            if (author.effect !== 'none') nameClass += ` effect-${author.effect}`;
 
-            card.innerHTML = `
+            const isLiked = t.likes?.includes(currentUser.username);
+
+            el.innerHTML = `
                 <div class="flex gap-4">
-                    <img src="${author.pfp}" class="w-12 h-12 rounded-full object-cover hover:opacity-80 transition stop-prop" onclick="viewUser('${tweet.author}')">
+                    <img src="${author.pfp}" class="w-10 h-10 rounded-full object-cover hover:opacity-80 transition stop-prop" onclick="window.viewUser('${t.author}')">
                     <div class="flex-1 min-w-0">
                         <div class="flex items-baseline flex-wrap">
-                            <span class="${nameClass}" style="${nameStyle}" data-text="${author.name}" onclick="viewUser('${tweet.author}')" class="stop-prop cursor-pointer hover:underline">${author.name}</span>
-                            <span class="text-gray-500 text-sm">@${author.username} · ${timeAgo(tweet.timestamp)}</span>
+                            <span class="${nameClasses}" style="${nameStyle}" data-text="${author.name}" onclick="window.viewUser('${t.author}')" class="stop-prop cursor-pointer">${author.name}</span>
+                            <span class="text-slate-500 text-sm">@${author.username} · ${timeAgo(t.timestamp)}</span>
                         </div>
+                        <p class="text-slate-100 mt-1 whitespace-pre-wrap leading-relaxed">${linkify(t.content)}</p>
+                        ${t.image ? `<div class="mt-3 rounded-xl overflow-hidden border border-white/10 max-h-[500px]"><img src="${t.image}" class="w-full object-cover"></div>` : ''}
                         
-                        <p class="text-gray-100 mt-1 whitespace-pre-wrap text-[17px] leading-relaxed">${linkify(tweet.content)}</p>
-                        
-                        ${tweet.image ? `
-                            <div class="mt-3 rounded-2xl overflow-hidden border border-white/10 max-h-[500px] hover:brightness-110 transition duration-500">
-                                <img src="${tweet.image}" class="w-full h-full object-cover">
-                            </div>` : ''}
-
-                        <div class="flex justify-between mt-3 text-gray-500 max-w-md">
-                            <button onclick="toggleComments('${tweet.id}')" class="stop-prop group flex items-center gap-2 hover:text-blue-500 transition">
-                                <div class="p-2 rounded-full group-hover:bg-blue-500/10 transition"><i class="fa-regular fa-comment"></i></div>
-                                <span class="text-sm">${tweet.comments ? tweet.comments.length : 0}</span>
+                        <div class="flex justify-between mt-3 max-w-sm text-slate-500">
+                            <button class="flex items-center gap-2 group hover:text-blue-400 transition stop-prop">
+                                <div class="p-2 rounded-full group-hover:bg-blue-500/10"><i class="fa-regular fa-comment"></i></div>
+                                <span class="text-xs">${t.comments?.length || 0}</span>
                             </button>
-                            <button class="stop-prop group flex items-center gap-2 hover:text-green-500 transition">
-                                <div class="p-2 rounded-full group-hover:bg-green-500/10 transition"><i class="fa-solid fa-retweet"></i></div>
+                            <button class="flex items-center gap-2 group hover:text-green-400 transition stop-prop">
+                                <div class="p-2 rounded-full group-hover:bg-green-500/10"><i class="fa-solid fa-retweet"></i></div>
                             </button>
-                            <button onclick="toggleLike('${tweet.id}', [${tweet.likes.map(l=>`'${l}'`)}])" class="stop-prop group flex items-center gap-2 hover:text-pink-500 transition ${isLiked ? 'text-pink-500' : ''}">
-                                <div class="p-2 rounded-full group-hover:bg-pink-500/10 transition"><i class="${isLiked ? 'fa-solid' : 'fa-regular'} fa-heart ${isLiked ? 'animate-[ping_0.3s]' : ''}"></i></div>
-                                <span class="text-sm">${tweet.likes.length}</span>
+                            <button onclick="window.likePost('${t.id}')" class="flex items-center gap-2 group hover:text-pink-500 transition stop-prop ${isLiked ? 'text-pink-500' : ''}">
+                                <div class="p-2 rounded-full group-hover:bg-pink-500/10"><i class="${isLiked ? 'fa-solid' : 'fa-regular'} fa-heart"></i></div>
+                                <span class="text-xs">${t.likes?.length || 0}</span>
                             </button>
-                            <button class="stop-prop group flex items-center gap-2 hover:text-blue-400 transition">
-                                <div class="p-2 rounded-full group-hover:bg-blue-400/10 transition"><i class="fa-solid fa-share-nodes"></i></div>
-                            </button>
-                        </div>
-
-                        <!-- Comments -->
-                        <div id="comments-${tweet.id}" class="hidden mt-3 pt-3 border-t border-white/5 space-y-3">
-                            <div class="flex gap-3">
-                                <img src="${currentUser.pfp}" class="w-8 h-8 rounded-full">
-                                <input type="text" placeholder="Post your reply" class="flex-1 bg-transparent border-none outline-none text-white placeholder-gray-600 focus:placeholder-gray-400" onkeydown="if(event.key === 'Enter') submitComment('${tweet.id}', this)">
-                            </div>
-                            <div class="space-y-4 pl-2 border-l-2 border-white/5 ml-4">
-                                ${(tweet.comments || []).map(c => {
-                                    const cAuthor = usersCache[c.author] || {name: c.author};
-                                    return `
-                                        <div class="animate-fade-in">
-                                            <div class="flex justify-between">
-                                                <span class="font-bold text-sm text-gray-300 hover:underline cursor-pointer" onclick="viewUser('${c.author}')">${cAuthor.name}</span>
-                                                <span class="text-xs text-gray-500">${timeAgo(c.timestamp)}</span>
-                                            </div>
-                                            <p class="text-gray-400 text-sm">${linkify(c.content)}</p>
-                                        </div>
-                                    `;
-                                }).join('')}
-                            </div>
                         </div>
                     </div>
                 </div>
             `;
-            
-            // Stop propagation helper
-            card.querySelectorAll('.stop-prop').forEach(el => el.addEventListener('click', e => e.stopPropagation()));
-            
-            return card;
+            el.querySelectorAll('.stop-prop').forEach(b => b.addEventListener('click', e => e.stopPropagation()));
+            return el;
         }
 
         function renderProfile() {
-            const user = (profileTarget === currentUser.username) ? currentUser : (usersCache[profileTarget] || { username: profileTarget, name: 'Loading...', pfp: '', banner: '' });
+            const user = (profileTarget === currentUser.username) ? currentUser : (usersCache[profileTarget] || { username: profileTarget, name: '...', pfp: '', banner: '' });
             
-            // If user isn't fully loaded yet, wait for fetch
-            if (user.name === 'Loading...') {
-                fetchUsers([profileTarget]).then(() => { if(currentRoute === 'profile') render(); });
-            }
+            // Load if missing
+            if (user.name === '...') fetchUsers([profileTarget]).then(() => { if(currentRoute === 'profile') render(); });
+
+            const isMe = user.username === currentUser.username;
+            const isFollowing = currentUser.following.includes(user.username);
 
             const div = document.createElement('div');
             
-            // Back Button
+            // Sticky Header
             div.innerHTML = `
-                <div class="flex items-center gap-4 p-2 sticky top-0 z-20 bg-black/60 backdrop-blur-md">
-                    <button onclick="currentRoute='feed'; render();" class="p-2 rounded-full hover:bg-white/10"><i class="fa-solid fa-arrow-left"></i></button>
+                <div class="sticky top-0 z-20 bg-black/70 backdrop-blur-md px-4 py-2 border-b border-white/10 flex items-center gap-4">
+                    <button onclick="currentRoute='feed'; render()" class="p-2 hover:bg-white/10 rounded-full"><i class="fa-solid fa-arrow-left"></i></button>
                     <div>
-                        <h2 class="text-xl font-bold">${user.name}</h2>
-                        <span class="text-sm text-gray-500">${tweets.filter(t => t.author === user.username).length} posts</span>
+                        <h2 class="font-bold text-lg leading-tight">${user.name}</h2>
+                        <p class="text-xs text-slate-500">${tweets.filter(t => t.author === user.username).length} posts</p>
                     </div>
                 </div>
             `;
 
             // Banner
-            const banner = document.createElement('div');
-            banner.className = "h-52 w-full bg-gray-800 relative group overflow-hidden";
-            banner.innerHTML = `<img src="${user.banner || ''}" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">`;
-            div.appendChild(banner);
+            div.innerHTML += `
+                <div class="h-48 w-full bg-slate-800 overflow-hidden relative">
+                    ${user.banner ? `<img src="${user.banner}" class="w-full h-full object-cover">` : ''}
+                </div>
+            `;
 
-            // Info
-            const info = document.createElement('div');
-            info.className = "px-4 pb-4 relative border-b border-white/5";
-            
-            const isMe = user.username === currentUser.username;
-            const isFollowing = currentUser.following.includes(user.username);
-
-            let nameClass = "text-2xl font-black mb-1";
+            // Details
+            let nameClasses = `text-2xl font-black ${user.effect !== 'none' ? 'effect-'+user.effect : ''}`;
             let nameStyle = `color: ${user.color}`;
             if (user.gradient && user.gradient !== 'none') {
                 const g = GRADIENTS.find(x => x.id === user.gradient);
-                if (g) {
-                    nameClass += ` ${g.class} text-transparent bg-clip-text`;
-                    nameStyle = "";
-                }
+                if (g) { nameClasses += ` ${g.class} text-transparent bg-clip-text`; nameStyle = ''; }
             }
-            if (user.effect && user.effect !== 'none') nameClass += ` effect-${user.effect}`;
 
+            const info = document.createElement('div');
+            info.className = "px-4 pb-4 relative border-b border-white/10";
             info.innerHTML = `
-                <div class="flex justify-between items-start">
-                    <div class="-mt-20 mb-3 relative">
-                        <div class="p-1 bg-black rounded-full inline-block">
-                            <img src="${user.pfp}" class="w-36 h-36 rounded-full object-cover border-4 border-black bg-gray-900 cursor-pointer hover:brightness-110 transition">
-                        </div>
+                <div class="flex justify-between items-start -mt-[4rem] mb-3">
+                    <div class="relative p-1 bg-black rounded-full">
+                        <img src="${user.pfp}" class="w-32 h-32 rounded-full object-cover border-4 border-black bg-slate-800">
                     </div>
-                    <div class="mt-4">
-                        ${isMe ? 
-                            `<button onclick="currentRoute='settings'; render();" class="border border-gray-600 font-bold px-5 py-2 rounded-full hover:bg-white/10 transition">Edit Profile</button>` : 
-                            `<button onclick="toggleFollow('${user.username}')" class="${isFollowing ? 'border border-gray-600 text-white hover:border-red-600 hover:text-red-500 hover:bg-red-500/10' : 'bg-white text-black hover:opacity-90'} font-bold px-6 py-2 rounded-full transition w-32">
-                                ${isFollowing ? 'Following' : 'Follow'}
-                            </button>`
+                    <div class="mt-[4.5rem]">
+                        ${isMe 
+                            ? `<button onclick="currentRoute='settings'; render()" class="border border-white/20 font-bold px-4 py-1.5 rounded-full hover:bg-white/10 transition">Edit profile</button>` 
+                            : `<button onclick="window.doFollow('${user.username}')" class="${isFollowing ? 'border border-white/20 text-white hover:border-red-500/50 hover:text-red-500 hover:bg-red-500/10' : 'bg-white text-black hover:opacity-90'} font-bold px-5 py-1.5 rounded-full transition min-w-[100px]">${isFollowing ? 'Following' : 'Follow'}</button>`
                         }
                     </div>
                 </div>
                 <div>
-                    <h2 class="${nameClass}" style="${nameStyle}" data-text="${user.name}">${user.name}</h2>
-                    <p class="text-gray-500 mb-4 text-sm">@${user.username}</p>
-                    <p class="text-white mb-4 whitespace-pre-wrap text-[15px]">${linkify(user.bio || '')}</p>
-                    
-                    <div class="flex gap-4 text-gray-500 text-sm mb-4">
-                        ${user.location ? `<span><i class="fa-solid fa-location-dot mr-1"></i> ${user.location}</span>` : ''}
-                        <span><i class="fa-regular fa-calendar mr-1"></i> Joined ${new Date(user.joined).toLocaleDateString(undefined, {month:'long', year:'numeric'})}</span>
+                    <h2 class="${nameClasses}" style="${nameStyle}" data-text="${user.name}">${user.name}</h2>
+                    <p class="text-slate-500 text-sm mb-3">@${user.username}</p>
+                    <p class="text-white mb-3 whitespace-pre-wrap">${linkify(user.bio || "")}</p>
+                    <div class="flex gap-4 text-slate-500 text-sm mb-3">
+                        <span><i class="fa-regular fa-calendar mr-1"></i> Joined ${new Date(user.joined).toLocaleDateString()}</span>
                     </div>
-
-                    <div class="flex gap-5 text-sm">
-                        <span class="text-white font-bold hover:underline cursor-pointer">${user.following ? user.following.length : 0} <span class="text-gray-500 font-normal">Following</span></span>
-                        <span class="text-white font-bold hover:underline cursor-pointer">${user.followers ? user.followers.length : 0} <span class="text-gray-500 font-normal">Followers</span></span>
+                    <div class="flex gap-4 text-sm">
+                        <span class="text-white font-bold">${user.following?.length || 0} <span class="text-slate-500 font-normal">Following</span></span>
+                        <span class="text-white font-bold">${user.followers?.length || 0} <span class="text-slate-500 font-normal">Followers</span></span>
                     </div>
                 </div>
             `;
             div.appendChild(info);
 
-            // User Tweets
-            const userTweets = tweets.filter(t => t.author === user.username);
-            if (userTweets.length === 0) {
-                const empty = document.createElement('div');
-                empty.className = "p-8 text-center text-gray-500 font-bold";
-                empty.textContent = "No posts yet";
-                div.appendChild(empty);
-            } else {
-                userTweets.forEach(t => div.appendChild(createTweetCard(t)));
-            }
+            // User's Tweets
+            const userPosts = tweets.filter(t => t.author === user.username);
+            userPosts.forEach(t => div.appendChild(createTweet(t)));
+            if (userPosts.length === 0) div.innerHTML += `<div class="p-8 text-center text-slate-500">No posts yet.</div>`;
 
             return div;
         }
 
         function renderSettings() {
             const div = document.createElement('div');
-            div.className = "p-6 max-w-3xl mx-auto";
-            
+            div.className = "max-w-2xl mx-auto min-h-screen bg-black";
+
+            // Header
             div.innerHTML = `
-                <div class="flex items-center gap-4 mb-8">
-                    <button onclick="currentRoute='profile'; render();" class="p-2 hover:bg-white/10 rounded-full"><i class="fa-solid fa-arrow-left"></i></button>
-                    <h2 class="text-2xl font-bold">Customize Identity</h2>
+                <div class="sticky top-0 z-20 bg-black/80 backdrop-blur-md px-4 py-3 flex items-center gap-4 border-b border-white/10">
+                    <button onclick="currentRoute='profile'; render()" class="p-2 hover:bg-white/10 rounded-full"><i class="fa-solid fa-arrow-left"></i></button>
+                    <h2 class="text-xl font-bold">Edit Profile</h2>
                 </div>
             `;
 
-            // Form
-            const form = document.createElement('div');
-            form.className = "grid gap-8";
+            const content = document.createElement('div');
+            content.className = "p-4 space-y-6 pb-20";
 
-            // Preview Box
-            const previewBox = document.createElement('div');
-            previewBox.className = "sticky top-4 z-20 bg-black/80 backdrop-blur-xl border border-white/10 rounded-3xl p-6 mb-4 shadow-2xl";
-            previewBox.innerHTML = `
-                <div class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Live Preview</div>
-                <div class="flex items-center gap-4">
-                    <img id="prevPfp" src="${currentUser.pfp}" class="w-16 h-16 rounded-full object-cover">
-                    <div>
-                        <h2 id="prevName" class="text-2xl font-bold">${currentUser.name}</h2>
-                        <p class="text-gray-500">@${currentUser.username}</p>
+            // 1. Images Section
+            const imagesCard = document.createElement('div');
+            imagesCard.className = "border border-white/10 rounded-2xl overflow-hidden";
+            imagesCard.innerHTML = `
+                <div class="h-32 bg-slate-800 relative group cursor-pointer" onclick="document.getElementById('bannerUpload').click()">
+                    <img id="editBannerPreview" src="${currentUser.banner || ''}" class="w-full h-full object-cover opacity-60 group-hover:opacity-40 transition">
+                    <div class="absolute inset-0 flex items-center justify-center text-white/50 group-hover:text-white transition font-bold"><i class="fa-solid fa-camera mr-2"></i> Edit Banner</div>
+                    <input type="file" id="bannerUpload" accept="image/*" onchange="window.handleEditFile(this, 'banner')">
+                </div>
+                <div class="px-4 pb-4 -mt-10 relative pointer-events-none">
+                    <div class="relative w-24 h-24 rounded-full overflow-hidden border-4 border-black bg-slate-700 group cursor-pointer pointer-events-auto" onclick="document.getElementById('pfpUpload').click()">
+                        <img id="editPfpPreview" src="${currentUser.pfp}" class="w-full h-full object-cover opacity-80 group-hover:opacity-60 transition">
+                        <div class="absolute inset-0 flex items-center justify-center text-white/50 group-hover:text-white transition"><i class="fa-solid fa-camera"></i></div>
+                        <input type="file" id="pfpUpload" accept="image/*" onchange="window.handleEditFile(this, 'pfp')">
                     </div>
                 </div>
             `;
-            form.appendChild(previewBox);
+            content.appendChild(imagesCard);
 
-            // Inputs
-            const section = (title, content) => `
-                <div class="bg-white/5 rounded-2xl p-6 border border-white/5">
-                    <h3 class="text-lg font-bold mb-4">${title}</h3>
-                    ${content}
+            // 2. Info Section
+            const infoCard = document.createElement('div');
+            infoCard.className = "space-y-4";
+            infoCard.innerHTML = `
+                <div>
+                    <label class="block text-sm text-slate-500 mb-1 ml-1">Name</label>
+                    <input id="editName" type="text" value="${currentUser.name}" class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 focus:border-blue-500 outline-none text-white transition" oninput="window.updateEditPreview()">
+                </div>
+                <div>
+                    <label class="block text-sm text-slate-500 mb-1 ml-1">Bio</label>
+                    <textarea id="editBio" class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 focus:border-blue-500 outline-none text-white transition h-24 resize-none">${currentUser.bio || ''}</textarea>
                 </div>
             `;
+            content.appendChild(infoCard);
 
-            // Inputs Section
-            form.innerHTML += section('Profile Details', `
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-xs text-gray-400 mb-1 ml-1">Display Name</label>
-                        <input type="text" id="editName" value="${currentUser.name}" class="w-full bg-black/40 border border-white/10 rounded-xl p-3 focus:border-blue-500 outline-none transition" oninput="updatePreview()">
-                    </div>
-                    <div>
-                        <label class="block text-xs text-gray-400 mb-1 ml-1">Bio</label>
-                        <textarea id="editBio" class="w-full bg-black/40 border border-white/10 rounded-xl p-3 focus:border-blue-500 outline-none transition h-24 resize-none">${currentUser.bio || ''}</textarea>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs text-gray-400 mb-1 ml-1">Avatar URL</label>
-                            <input type="text" id="editPfp" value="${currentUser.pfp}" class="w-full bg-black/40 border border-white/10 rounded-xl p-3 focus:border-blue-500 outline-none transition" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-xs text-gray-400 mb-1 ml-1">Banner URL</label>
-                            <input type="text" id="editBanner" value="${currentUser.banner || ''}" class="w-full bg-black/40 border border-white/10 rounded-xl p-3 focus:border-blue-500 outline-none transition">
-                        </div>
-                    </div>
+            // 3. Visuals (Grid)
+            const visualsCard = document.createElement('div');
+            visualsCard.className = "space-y-6 pt-4 border-t border-white/10";
+            
+            // Name Preview
+            visualsCard.innerHTML = `
+                <div class="bg-slate-900/50 rounded-xl p-4 text-center border border-white/5 sticky top-20 z-10 backdrop-blur-xl">
+                    <div class="text-xs text-slate-500 uppercase font-bold mb-2">Name Preview</div>
+                    <span id="namePreview" class="text-3xl font-black block">${currentUser.name}</span>
                 </div>
-            `);
+            `;
 
             // Colors
-            form.innerHTML += section('Name Color', `
-                <div class="flex flex-wrap gap-3">
-                    ${COLORS.map(c => `
-                        <div onclick="setPreviewStyle('color', '${c}')" class="w-10 h-10 rounded-full cursor-pointer hover:scale-110 transition border-2 border-transparent hover:border-white shadow-lg" style="background:${c}"></div>
-                    `).join('')}
+            visualsCard.innerHTML += `
+                <div>
+                    <h3 class="font-bold mb-3">Accent Color</h3>
+                    <div class="flex flex-wrap gap-3">
+                        ${COLORS.map(c => `
+                            <div onclick="window.setEditStyle('color', '${c}')" class="w-10 h-10 rounded-full cursor-pointer hover:scale-110 transition border-2 border-transparent hover:border-white" style="background:${c}"></div>
+                        `).join('')}
+                    </div>
                 </div>
-            `);
+            `;
 
             // Gradients
-            form.innerHTML += section('Text Gradients', `
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    ${GRADIENTS.map(g => `
-                        <div onclick="setPreviewStyle('gradient', '${g.id}')" class="h-12 rounded-xl cursor-pointer hover:scale-105 transition border border-white/10 flex items-center justify-center font-bold text-shadow text-sm ${g.class} ${g.id === 'none' ? 'bg-gray-800' : ''}">
-                            ${g.label}
-                        </div>
-                    `).join('')}
+            visualsCard.innerHTML += `
+                <div>
+                    <h3 class="font-bold mb-3">Gradient Text</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        ${GRADIENTS.map(g => `
+                            <div onclick="window.setEditStyle('gradient', '${g.id}')" class="h-12 rounded-lg cursor-pointer border border-white/10 flex items-center justify-center font-bold text-sm ${g.class} ${g.id === 'none' ? 'bg-slate-800' : ''}">
+                                ${g.label}
+                            </div>
+                        `).join('')}
+                    </div>
                 </div>
-            `);
+            `;
 
             // Effects
-            form.innerHTML += section('Special Effects', `
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    ${EFFECTS.map(e => `
-                        <div onclick="setPreviewStyle('effect', '${e.id}')" class="p-4 rounded-xl cursor-pointer border border-white/10 hover:border-blue-500 hover:bg-blue-500/10 transition text-center">
-                            <span class="font-bold text-lg ${e.id !== 'none' ? 'effect-'+e.id : ''}" data-text="${e.label}">${e.label}</span>
-                        </div>
-                    `).join('')}
+            visualsCard.innerHTML += `
+                <div>
+                    <h3 class="font-bold mb-3">Effects</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        ${EFFECTS.map(e => `
+                            <div onclick="window.setEditStyle('effect', '${e.id}')" class="p-3 rounded-lg cursor-pointer border border-white/10 hover:border-blue-500 text-center bg-slate-900/50">
+                                <span class="font-bold ${e.id !== 'none' ? 'effect-'+e.id : ''}" data-text="${e.label}">${e.label}</span>
+                            </div>
+                        `).join('')}
+                    </div>
                 </div>
-            `);
-
-            // Buttons
-            const actions = document.createElement('div');
-            actions.className = "flex gap-4 pt-4";
-            actions.innerHTML = `
-                <button onclick="saveSettings()" class="flex-1 bg-white text-black font-bold py-4 rounded-full text-lg hover:bg-gray-200 transition shadow-[0_0_20px_rgba(255,255,255,0.3)]">Save Changes</button>
-                <button onclick="currentRoute='profile'; render();" class="px-8 py-4 rounded-full font-bold border border-white/20 hover:bg-white/10 transition">Cancel</button>
             `;
-            form.appendChild(actions);
-            
-            div.appendChild(form);
 
-            // Preview State logic
-            let pState = { color: currentUser.color, gradient: currentUser.gradient, effect: currentUser.effect };
+            content.appendChild(visualsCard);
 
-            window.setPreviewStyle = (key, val) => {
-                pState[key] = val;
-                // Auto turn off gradient if color selected and vice versa
-                if(key === 'color') pState.gradient = 'none';
-                if(key === 'gradient' && val !== 'none') pState.color = '#ffffff'; // Reset color if gradient active
-
-                updatePreviewUI();
-            };
-
-            window.updatePreview = () => {
-                const name = document.getElementById('editName').value;
-                const pfp = document.getElementById('editPfp').value;
-                document.getElementById('prevName').innerText = name;
-                document.getElementById('prevName').setAttribute('data-text', name);
-                document.getElementById('prevPfp').src = pfp;
-                updatePreviewUI();
-            };
-
-            window.updatePreviewUI = () => {
-                const el = document.getElementById('prevName');
-                el.className = "text-2xl font-bold transition-all duration-300";
-                el.style.color = "";
-                
-                if (pState.gradient !== 'none') {
-                    const g = GRADIENTS.find(x => x.id === pState.gradient);
-                    el.classList.add(...g.class.split(' '), 'text-transparent', 'bg-clip-text');
-                } else {
-                    el.style.color = pState.color;
-                }
-
-                if (pState.effect !== 'none') el.classList.add('effect-' + pState.effect);
-            };
-
-            window.saveSettings = async () => {
+            // Save Button
+            const saveBtn = document.createElement('button');
+            saveBtn.className = "w-full bg-white text-black font-bold py-3 rounded-full hover:bg-slate-200 transition sticky bottom-6 shadow-[0_0_20px_rgba(255,255,255,0.2)]";
+            saveBtn.innerText = "Save";
+            saveBtn.onclick = async () => {
+                saveBtn.disabled = true;
+                saveBtn.innerText = "Saving...";
                 const name = document.getElementById('editName').value;
                 const bio = document.getElementById('editBio').value;
-                const pfp = document.getElementById('editPfp').value;
-                const banner = document.getElementById('editBanner').value;
+                const banner = document.getElementById('editBannerPreview').src;
+                const pfp = document.getElementById('editPfpPreview').src;
                 
-                await updateProfile({ name, bio, pfp, banner, ...pState });
+                await updateProfile({ name, bio, banner, pfp, ...editStyle });
             };
+            content.appendChild(saveBtn);
 
-            // Init preview
-            setTimeout(() => window.updatePreviewUI(), 50);
+            div.appendChild(content);
+
+            // Logic
+            window.editStyle = { color: currentUser.color, gradient: currentUser.gradient, effect: currentUser.effect };
+            
+            window.handleEditFile = async (input, type) => {
+                if(input.files[0]) {
+                    const b64 = await fileToBase64(input.files[0]);
+                    document.getElementById(type === 'banner' ? 'editBannerPreview' : 'editPfpPreview').src = b64;
+                }
+            }
+
+            window.setEditStyle = (key, val) => {
+                window.editStyle[key] = val;
+                if(key === 'color') window.editStyle.gradient = 'none';
+                if(key === 'gradient' && val !== 'none') window.editStyle.color = '#fff';
+                window.updateEditPreview();
+            }
+
+            window.updateEditPreview = () => {
+                const el = document.getElementById('namePreview');
+                el.innerText = document.getElementById('editName').value;
+                el.setAttribute('data-text', el.innerText);
+                el.className = `text-3xl font-black block transition-all ${window.editStyle.effect !== 'none' ? 'effect-'+window.editStyle.effect : ''}`;
+                el.style.color = '';
+
+                if(window.editStyle.gradient !== 'none') {
+                    const g = GRADIENTS.find(x => x.id === window.editStyle.gradient);
+                    el.classList.add(...g.class.split(' '), 'text-transparent', 'bg-clip-text');
+                } else {
+                    el.style.color = window.editStyle.color;
+                }
+            }
+
+            setTimeout(window.updateEditPreview, 50);
 
             return div;
         }
 
-        // --- Helpers ---
+        // --- Auth UI ---
 
-        // Global functions for inline HTML events
+        function renderAuth() {
+            const div = document.createElement('div');
+            div.className = "w-full max-w-md p-8 pt-20 flex flex-col items-center animate-fade-in";
+            div.innerHTML = `
+                <i class="fa-brands fa-x-twitter text-6xl text-white mb-8"></i>
+                <h1 class="text-3xl font-bold mb-8">Happening now</h1>
+                
+                <form id="authForm" class="w-full space-y-4">
+                    <div id="signupName" class="hidden">
+                        <input type="text" name="name" placeholder="Name" class="w-full bg-black border border-white/20 rounded px-4 py-3 outline-none focus:border-blue-500 text-white">
+                    </div>
+                    <input type="text" name="username" placeholder="Username" class="w-full bg-black border border-white/20 rounded px-4 py-3 outline-none focus:border-blue-500 text-white" required>
+                    <input type="password" name="password" placeholder="Password" class="w-full bg-black border border-white/20 rounded px-4 py-3 outline-none focus:border-blue-500 text-white" required>
+                    
+                    <button type="submit" class="w-full bg-white text-black font-bold rounded-full py-3 hover:bg-slate-200 transition mt-4" id="submitAuth">Log in</button>
+                </form>
+
+                <div class="mt-8 text-slate-500">
+                    <span id="authToggleText">Don't have an account?</span>
+                    <button class="text-blue-400 hover:underline ml-1" onclick="window.toggleAuthMode()">Sign up</button>
+                </div>
+            `;
+
+            let isSignup = false;
+            window.toggleAuthMode = () => {
+                isSignup = !isSignup;
+                document.getElementById('signupName').classList.toggle('hidden', !isSignup);
+                document.getElementById('submitAuth').innerText = isSignup ? 'Sign up' : 'Log in';
+                document.getElementById('authToggleText').innerText = isSignup ? 'Have an account?' : "Don't have an account?";
+            };
+
+            div.querySelector('form').onsubmit = async (e) => {
+                e.preventDefault();
+                const fd = new FormData(e.target);
+                const data = Object.fromEntries(fd);
+                const res = isSignup 
+                    ? await signup(data.username, data.password, data.name) 
+                    : await login(data.username, data.password);
+                
+                if(res.error) alert(res.error);
+            };
+
+            root.innerHTML = '';
+            root.className = "min-h-screen bg-black text-white flex justify-center";
+            root.appendChild(div);
+        }
+
+        // --- Helpers Global ---
+        window.navTo = () => {}; 
         window.viewUser = (u) => { profileTarget = u; currentRoute = 'profile'; render(); };
-        window.toggleComments = (id) => { document.getElementById(`comments-${id}`).classList.toggle('hidden'); };
+        window.doFollow = (u) => toggleFollow(u);
+        window.likePost = async (id) => {
+            const ref = doc(db, "tweets", id);
+            const t = tweets.find(x => x.id === id);
+            if(!t) return;
+            const liked = t.likes.includes(currentUser.username);
+            await updateDoc(ref, { likes: liked ? arrayRemove(currentUser.username) : arrayUnion(currentUser.username) });
+        };
         
-        window.handleImage = (input) => {
-            if (input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const div = document.getElementById('imgPreview');
-                    div.classList.remove('hidden');
-                    div.querySelector('img').src = e.target.result;
-                };
-                reader.readAsDataURL(input.files[0]);
+        window.handleComposerImg = async (input) => {
+            if(input.files[0]) {
+                const b64 = await fileToBase64(input.files[0]);
+                const prev = document.getElementById('previewImg');
+                prev.classList.remove('hidden');
+                prev.querySelector('img').src = b64;
             }
         };
-        window.clearImage = () => {
-            const div = document.getElementById('imgPreview');
-            div.classList.add('hidden');
-            div.querySelector('img').src = '';
-            document.querySelector('input[type="file"]').value = '';
+        window.clearComposerImg = () => {
+             document.getElementById('previewImg').classList.add('hidden');
+             document.querySelector('input[type="file"]').value = '';
         };
-
-        window.submitTweet = async () => {
-            const btn = document.querySelector('button[onclick="submitTweet()"]');
-            btn.disabled = true;
-            const text = document.getElementById('tweetInput').value;
-            const imgDiv = document.getElementById('imgPreview');
-            const img = (!imgDiv.classList.contains('hidden')) ? imgDiv.querySelector('img').src : null;
-            
-            await postTweet(text, img);
-            currentRoute = 'feed'; // Refresh feed logic handles updates via snapshot
-            // Reset is handled by re-render from snapshot
-        };
-
-        window.submitComment = async (id, input) => {
-            await addComment(id, input.value);
-            input.value = '';
+        window.submitPost = async () => {
+            const txt = document.getElementById('tweetInput').value;
+            const imgEl = document.getElementById('previewImg');
+            const img = (!imgEl.classList.contains('hidden')) ? imgEl.querySelector('img').src : null;
+            await postTweet(txt, img);
+            currentRoute = 'feed'; render();
         };
 
         function linkify(text) {
             return text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" class="text-blue-400 hover:underline" onclick="event.stopPropagation()">$1</a>');
         }
 
-        function timeAgo(dateStr) {
-            const date = new Date(dateStr);
-            const seconds = Math.floor((new Date() - date) / 1000);
-            if (seconds < 60) return `${seconds}s`;
-            const minutes = Math.floor(seconds / 60);
-            if (minutes < 60) return `${minutes}m`;
-            const hours = Math.floor(minutes / 60);
-            if (hours < 24) return `${hours}h`;
-            return date.toLocaleDateString();
+        function timeAgo(d) {
+            const s = Math.floor((new Date() - new Date(d)) / 1000);
+            if(s < 60) return s + 's';
+            if(s < 3600) return Math.floor(s/60) + 'm';
+            if(s < 86400) return Math.floor(s/3600) + 'h';
+            return new Date(d).toLocaleDateString();
         }
 
-        // --- Init ---
+        // Start
         if (currentUser) initApp();
         else renderAuth();
 
