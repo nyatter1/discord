@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Presently Chat</title>
+    <title>Amazing Chat</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -94,7 +94,7 @@
                 <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-500/30">
                     <i class="fa-solid fa-comments text-2xl text-white"></i>
                 </div>
-                <h1 class="text-3xl font-bold text-white mb-2">Presently Chat</h1>
+                <h1 class="text-3xl font-bold text-white mb-2">Amazing Chat</h1>
                 <p class="text-slate-400">Join the conversation securely</p>
             </div>
 
@@ -336,7 +336,7 @@
                 scrollToBottom();
             } catch (error) {
                 console.error("Send Error:", error);
-                alert("Failed to send message");
+                alert("Failed to send message: " + error.message);
             }
         });
 
@@ -370,13 +370,19 @@
         });
 
         function subscribeToUsers() {
-            const q = query(collection(db, "users"), orderBy("displayName"));
+            // Simplified query to avoid index issues. Sorting done client-side.
+            const q = query(collection(db, "users"));
             onSnapshot(q, (snapshot) => {
                 usersListEl.innerHTML = '';
                 let count = 0;
                 
-                snapshot.forEach((doc) => {
-                    const userData = doc.data();
+                const users = [];
+                snapshot.forEach(doc => users.push(doc.data()));
+                
+                // Sort users by name client-side
+                users.sort((a, b) => (a.displayName || '').localeCompare(b.displayName || ''));
+
+                users.forEach((userData) => {
                     if (userData.uid === currentUser.uid) return; // Don't show self
 
                     count++;
@@ -385,7 +391,7 @@
                     userEl.innerHTML = `
                         <div class="relative">
                             <div class="w-10 h-10 bg-slate-600 rounded-lg flex items-center justify-center text-slate-300 font-bold">
-                                ${userData.displayName.charAt(0).toUpperCase()}
+                                ${userData.displayName ? userData.displayName.charAt(0).toUpperCase() : '?'}
                             </div>
                             <span class="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-slate-800 rounded-full"></span>
                         </div>
@@ -412,6 +418,8 @@
                         </div>
                     `;
                 }
+            }, (error) => {
+                console.error("User list error:", error);
             });
         }
 
@@ -430,7 +438,6 @@
                 chatHeaderIcon.innerHTML = '<i class="fa-solid fa-earth-americas"></i>';
                 
                 globalChatBtn.classList.add('active-user');
-                // Remove active class from user list items manually if needed, or re-render
                 document.querySelectorAll('#users-list button').forEach(b => b.classList.remove('bg-slate-700', 'border-slate-600'));
             } else {
                 chatHeaderTitle.innerText = targetUser ? targetUser.displayName : "Private Chat";
@@ -440,17 +447,17 @@
                 chatHeaderIcon.innerHTML = '<i class="fa-solid fa-lock"></i>';
                 
                 globalChatBtn.classList.remove('active-user');
-                // Highlight logic handled in re-renders or direct class manipulation could go here
-                // For simplicity, we just rely on the click handling or re-render
             }
 
             // Load Messages
             messagesContainer.innerHTML = '<div class="flex items-center justify-center h-full"><div class="loader"></div></div>';
             
+            // CRITICAL FIX: Remove 'orderBy' from query. 
+            // Querying with 'where' and 'orderBy' requires a composite index.
+            // Removing 'orderBy' allows the query to run without index setup.
             const q = query(
                 collection(db, "messages"), 
-                where("conversationId", "==", chatId),
-                orderBy("timestamp", "asc")
+                where("conversationId", "==", chatId)
             );
 
             unsubscribeMessages = onSnapshot(q, (snapshot) => {
@@ -468,10 +475,22 @@
                     return;
                 }
 
+                // Collect and sort messages Client-Side
+                let messages = [];
+                snapshot.forEach((doc) => {
+                    messages.push(doc.data());
+                });
+
+                // Sort by timestamp
+                messages.sort((a, b) => {
+                    const timeA = a.timestamp ? a.timestamp.seconds : Math.floor(Date.now()/1000);
+                    const timeB = b.timestamp ? b.timestamp.seconds : Math.floor(Date.now()/1000);
+                    return timeA - timeB;
+                });
+
                 let lastDate = null;
 
-                snapshot.forEach((doc) => {
-                    const msg = doc.data();
+                messages.forEach((msg) => {
                     const isMe = msg.senderId === currentUser.uid;
                     
                     // Date Divider
@@ -509,6 +528,15 @@
                 });
                 
                 scrollToBottom();
+            }, (error) => {
+                // Error handling for permissions or network issues
+                console.error("Messages Error:", error);
+                messagesContainer.innerHTML = `
+                    <div class="flex flex-col items-center justify-center h-full text-red-400 p-4 text-center">
+                        <i class="fa-solid fa-triangle-exclamation text-3xl mb-3"></i>
+                        <p>Unable to load messages.</p>
+                        <p class="text-xs mt-2 text-slate-500">${error.message}</p>
+                    </div>`;
             });
         }
 
